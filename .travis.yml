@@ -5,8 +5,8 @@ services:
 
 script: 
   - docker build .  --tag dt-twitt:v1.0.0
-  - docker login -e $DOCKER_EMAIL -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
-  - export REPO=dihogoteixeira/dt-collections-tags
+  - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+  - export REPO=dt-collections-tags
   - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi
   - docker build -f Dockerfile -t $REPO:$COMMIT .
   - docker tag $REPO:$COMMIT $REPO:$TAG
