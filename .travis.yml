@@ -14,3 +14,4 @@ script:
   - npm install express-validator
   - npm install mongodb
   - npm install twit
+  - node app.js
