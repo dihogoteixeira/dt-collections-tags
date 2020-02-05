@@ -33,7 +33,6 @@ app.get('/api', function(req, res){
 			console.log('language:', tweet.metadata.iso_language_code)
 		});
 	});
-	module.exports.client
 });
 
 
