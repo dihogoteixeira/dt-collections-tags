@@ -8,5 +8,4 @@ script:
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
   - export REPO=dt-collections-tags
   - docker tag dt-twitt:v1.0.0 dihogoteixeira/dt-collections-tags:v1.0.0
-  - docker commit dt-twitt:v1.0.0 dihogoteixeira/dt-collections-tags:v1.0.0
   - docker push dihogoteixeira/dt-collections-tags:v1.0.0
