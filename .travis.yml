@@ -1,17 +1,14 @@
-language: node_js
+dist: trusty
+sudo: required
+services:
+  - docker
 
-node_js: '12' # or another
-
-cache:  
-  directories:  
-    - "node_modules"
-
-script:
-  - npm install body-parser
-  - npm install consign
-  - npm install dotenv
-  - npm install ejs
-  - npm install express-validator
-  - npm install mongodb
-  - npm install twit
-  - node app.js
+script: 
+  - docker build .  --tag dt-twitt:v1.0.0
+  - docker login -e $DOCKER_EMAIL -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+  - export REPO=dihogoteixeira/dt-collections-tags
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi
+  - docker build -f Dockerfile -t $REPO:$COMMIT .
+  - docker tag $REPO:$COMMIT $REPO:$TAG
+  - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
+  - docker push $REPO
