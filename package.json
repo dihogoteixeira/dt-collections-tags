@@ -13,7 +13,7 @@
     "body-parser": "^1.15.2",
     "consign": "^0.1.2",
     "dotenv": "^8.2.0",
-    "ejs": "^2.5.2",
+    "ejs": "^2.5.5",
     "express": "^4.14.0",
     "express-validator": "^2.20.8",
     "mongodb": "^3.5.2",
