@@ -1,0 +1,55 @@
+version: '3'
+services:
+  db:
+    container_name: webmysql
+    image: mysql:5.7
+    restart: always
+    ports:
+      - 3306:3306
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      TZ: "America/Sao_Paulo"
+      MYSQL_ROOT_PASSWORD: "rootpass"
+      MYSQL_DATABASE: "testdb"
+  web:
+    container_name: webapp
+    restart: always
+    build: docker/php-apache
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - 8081:80
+    dns: 8.8.8.8
+    command: bash -c "cd /var/www/html && 
+      cp .env.example .env && 
+      composer install && 
+      php artisan key:generate && 
+      php artisan migrate && 
+      service apache2 restart && 
+      echo '' > /var/www/html/storage/logs/app.log && 
+      tail -f /var/www/html/storage/logs/app.log"
+    links:
+      - db
+    depends_on:
+      - db
+  datadog:
+    container_name: datadog-agent
+    build: docker/datadog
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /proc/:/host/proc/:ro
+      - /sys/fs/cgroup:/host/sys/fs/cgroup:ro
+      - /etc/passwd:/etc/passwd:ro
+    links:
+      - web
+    depends_on:
+      - web
+  swagger:
+    container_name: swagger
+    build: docker/swagger
+    ports:
+      - 8082:8080 
+    links:
+      - web
+    depends_on:
+      - web

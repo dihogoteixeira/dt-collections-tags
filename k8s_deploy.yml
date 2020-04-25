@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ci-dtcollection
+  labels:
+    app: ci-dtcollection
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ci-dtcollection
+template:
+    metadata:
+      labels:
+        app: ci-dtcollection
+    spec:
+      containers:
+        - name: test
+          image: dihogoteixeira/dt-collections-tags:__VERSION_PROJECT__
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+      imagePullSecrets:
+        - name: gitlab-registry
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ci-dtcollection
+  labels:
+    app: ci-dtcollection
+spec:
+  ports:
+  - port: 3000
+    nodePort: 30001
+    targetPort: 3000
+    protocol: TCP
+    name: http
+  type: NodePort
+  selector:
+    app: ci-dtcollection

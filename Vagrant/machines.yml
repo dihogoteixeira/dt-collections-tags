@@ -1,0 +1,14 @@
+- name: srv-gitlab
+  cpus: 2
+  memory: 3000
+  hostname: srv-gitlab
+  ip: 192.168.66.10
+  sistema: ubuntu/xenial64
+
+- name: srv-orchestrator
+  cpus: 2
+  memory: 3000 
+  hostname: srv-orchestrator
+  ip: 192.168.66.20
+  sistema: ubuntu/xenial64
+

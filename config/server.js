@@ -17,7 +17,6 @@ var app = express();
 app.set('view engine', 'ejs');
 app.set('views', './app/views');
 
-
 var Twit = require('twit');
 require('dotenv').config();
 
@@ -29,6 +28,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 /* configurar o middleware express-validator */
 app.use(expressValidator());
+
 
 /* efetua o autoload das rotas, dos models e dos controllers para o objeto app */
 consign()
